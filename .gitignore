@@ -1,0 +1,9 @@
+# The .gitignore file
+
+# npm
+node_modules
+package-lock.json
+
+# custom
+.env
+config/
