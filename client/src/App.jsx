@@ -3,7 +3,7 @@ import { Router, Route, Switch } from "react-router-dom";
 import history from "./utils/history";
 import "./App.scss";
 import Landing from "./app/RootPage/Landing";
-import Footer from "./app/RootPage/Footer";
+// import Footer from "./app/RootPage/Footer";
 import Poll from "./app/Polls/Poll";
 import ThanksForVoting from "./app/Polls/ThanksForVoting";
 import Results from "./app/Polls/Results";
