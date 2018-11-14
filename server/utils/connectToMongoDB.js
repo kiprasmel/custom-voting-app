@@ -5,8 +5,8 @@ module.exports = () => {
 		.connect(
 			process.env.MONGODB_URI,
 			{
-				useNewUrlParser: true,
-				autoIndex: process.env.NODE_ENV === "production" ? false : true,
+				useNewUrlParser: true, // autoIndex: process.env.NODE_ENV === "production" ? false : true,
+				useCreateIndex: process.env.NODE_ENV === "production" ? false : true,
 			}
 		)
 		.then(() => console.log("~Connected to MongoDB"))
