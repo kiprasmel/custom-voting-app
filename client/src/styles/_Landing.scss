@@ -1,0 +1,28 @@
+.landing-page {
+	background-color: theme-color("xdark");
+	height: 100vh;
+}
+
+#main-col {
+	align-items: center;
+	justify-content: center;
+	height: 60vh;
+	// margin-top: -2rem;
+}
+
+.input-group {
+	.input {
+		border: none;
+	}
+	#input-left {
+		background: #fff;
+		border-radius: 50px 0 0 50px;
+	}
+
+	#input-middle {
+	}
+
+	#input-right {
+		border-radius: 0 50px 50px 0;
+	}
+}
