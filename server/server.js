@@ -5,7 +5,9 @@
 
 /** load .env environment variables to process.env */
 "use strict";
-// require("./utils/loadDotenv")("../.env"); // FOR HEROKU ONLY
+if (process.env.HEROKU != "true") {
+	require("./utils/loadDotenv")("../.env"); // FOR HEROKU ONLY
+}
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -16,7 +18,7 @@ const helmet = require("helmet");
 /// foo(bar)
 
 const app = express();
-const port = process.env.SERVER_PORT | 5000;
+const port = process.env.PORT || 5000;
 
 app.use(helmet()); // https://helmetjs.github.io/
 app.use(express.urlencoded({ extended: false }));
