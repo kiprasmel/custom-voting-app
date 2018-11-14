@@ -29,11 +29,16 @@ require("./utils/connectToMongoDB")();
 app.use("/api/poll", require("./routes/poll"));
 app.use("/api/vote", require("./routes/vote"));
 
+// if in production:
 if (process.env.NODE_ENV === "production") {
-	app.use(express.static("client/build"));
+	// serve static assets
+	app.use(express.static("../client/build"));
 
+	// capture everything that's outside our API routes and send the built react application (index.html file):
 	app.get("*", (req, res) => {
-		res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+		// both are the same:
+		// res.sendFile(path.join(__dirname, "../client", "build", "index.html"))
+		res.sendFile(path.resolve(__dirname, "../", "client", "build", "index.html"));
 	});
 }
 
