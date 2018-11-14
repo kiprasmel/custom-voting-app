@@ -5,7 +5,7 @@
 
 /** load .env environment variables to process.env */
 "use strict";
-require("./utils/loadDotenv")("../.env");
+// require("./utils/loadDotenv")("../.env"); // FOR HEROKU ONLY
 
 const express = require("express");
 const mongoose = require("mongoose");
