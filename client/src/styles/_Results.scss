@@ -1,0 +1,16 @@
+.results {
+}
+
+// move to Place.scss
+.place {
+	.revealBtn {
+		border: none;
+		background: transparent;
+		min-height: 20vh;
+		&:hover {
+		}
+		&:focus {
+			outline: none;
+		}
+	}
+}
