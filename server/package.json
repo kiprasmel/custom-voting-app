@@ -1,5 +1,4 @@
 {
-	"name": "custom-voting-app",
 	"version": "0.1.0",
 	"description": "",
 	"main": "server.js",
