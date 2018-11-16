@@ -34,6 +34,7 @@ router.get("/:nameOrVotingCode/:populateVotesTF", async (req, res) => {
 			.exec();
 
 		if (isEmpty(poll)) return res.status(404).json({ error: "Poll doesn't exist!" });
+		if (poll.status === "ended") return res.status(403).json({ error: "Poll has ended!" });
 
 		if (populateVotesTF !== "true") {
 			return res.json(poll);
@@ -158,6 +159,40 @@ router.post("/", async (req, res) => {
 		console.log(e);
 		return res.status(500).json(e);
 	}
+});
+
+router.post("/:pollName/stop", async (req, res) => {
+	try {
+		const { password } = req.body;
+		const { pollName, status } = req.params;
+
+		// const { isValid, errors } = validateCreatePoll(name, votingCodes, votingOptions);
+		// if (!isValid) return res.status(400).json({ errors });
+
+		console.log("password", password, process.env.TEMP_ADMIN_PASSWORD);
+		if (password === process.env.TEMP_ADMIN_PASSWORD) {
+			const existingPoll = await Poll.findOne({
+				$or: [{ name: pollName }, { votingCodes: { $in: pollName } }],
+			});
+
+			existingPoll.status = "ended";
+
+			const savedPoll = await existingPoll.save();
+			return res.json(savedPoll);
+		}
+	} catch (e) {
+		console.log(e);
+		return res.status(500).json(e);
+	}
+});
+
+// #TODO #DELETEME
+router.patch("/clearVotes/:password", async (req, res) => {
+	const { password } = req.params;
+
+	if (password === process.env.TEMP_ADMIN_PASSWORD) {
+		// Poll.findOneAndUpdate({}, {});
+	} else res.status(403).json({ error: "Wrong password!" });
 });
 
 /** DELETE delete one poll by it's name */

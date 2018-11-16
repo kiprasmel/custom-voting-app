@@ -19,6 +19,7 @@ class Poll extends Component {
 			votingOptions: [],
 			isLoadingPoll: true,
 			isPollEmpty: false,
+			isPollEnded: false,
 			hasUserAlreadyVoted: false,
 			errors: [],
 		};
@@ -46,11 +47,15 @@ class Poll extends Component {
 			this.setState({ isLoadingPoll: true });
 
 			const { data: poll } = await axios.get(`/api/poll/${this.pollName}/false`);
+			console.log("Poll data", poll);
 
 			await this.generateDataAndFillState(poll);
 		} catch (e) {
 			if (e.response.status === 404) {
 				this.setState({ isPollEmpty: true });
+			}
+			if (e.response.status === 403) {
+				this.setState({ isPollEnded: true });
 			}
 			console.log(e);
 		}
@@ -165,18 +170,28 @@ class Poll extends Component {
 				history.push(`/thanksForVoting/${this.pollName}`);
 			}
 		} catch (e) {
-			console.log(e);
+			console.log({ e });
+			this.setState({ errors: e.response.data });
 		}
 	};
 
 	render() {
-		const { isLoadingPoll, isPollEmpty, hasUserAlreadyVoted } = this.state;
+		const { isLoadingPoll, isPollEmpty, hasUserAlreadyVoted, isPollEnded } = this.state;
 
 		const goBackBtn = (
 			<button className="btn btn-lg btn-xpink " onClick={(e) => history.push("/")}>
 				Grįžti į pradinį puslapį
 			</button>
 		);
+
+		if (isPollEnded) {
+			return (
+				<>
+					<h1 className="display-4 text-xlight">Deja, balsavimas jau sustabdytas!</h1>
+					{goBackBtn}
+				</>
+			);
+		}
 
 		if (hasUserAlreadyVoted) {
 			return (

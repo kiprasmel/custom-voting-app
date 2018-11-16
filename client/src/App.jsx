@@ -7,6 +7,7 @@ import Landing from "./app/RootPage/Landing";
 import Poll from "./app/Polls/Poll";
 import ThanksForVoting from "./app/Polls/ThanksForVoting";
 import Results from "./app/Polls/Results";
+import Admin from "./app/Polls/Admin";
 
 class App extends Component {
 	render() {
@@ -20,6 +21,7 @@ class App extends Component {
 							<Route exact path="/poll/:pollName" component={Poll} />
 							<Route exact path="/thanksForVoting/:pollName" component={ThanksForVoting} />
 							<Route exact path="/results/:pollName" component={Results} />
+							<Route exact path="/stop/:pollName" component={Admin} />
 						</Switch>
 						{/* #todo - footer */}
 					</div>

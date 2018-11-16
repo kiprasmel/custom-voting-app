@@ -45,8 +45,14 @@ class Landing extends Component {
 		} catch (e) {
 			console.log(e);
 			let newErrors = this.state.errors;
-			newErrors.code = "Balsavimas nerastas, pasitikrink kodą!";
-			if (e.response.status === 404) this.setState({ newErrors });
+			if (e.response.status === 404) {
+				newErrors.code = "Balsavimas nerastas, pasitikrink kodą!";
+				this.setState({ newErrors });
+			}
+			if (e.response.status === 403) {
+				newErrors.code = "Deja, balsavimas jau sustabdytas!";
+				this.setState({ newErrors });
+			}
 		}
 	};
 

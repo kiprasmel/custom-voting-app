@@ -29,6 +29,7 @@ router.post("/", async (req, res) => {
 		// make sure poll exists:
 		const poll = await Poll.findOne({ name: pollName, votingCodes: votingCode }).exec();
 		if (isEmpty(poll)) return res.status(404).json({ error: "Poll not found!" });
+		// if (poll.status === "ended") return res.status(403).json({ error: "Poll has ended!" });
 
 		console.log("poll found!", poll);
 
