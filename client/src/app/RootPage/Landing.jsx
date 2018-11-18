@@ -41,17 +41,17 @@ class Landing extends Component {
 			// redirect to the specific poll
 			const { data: poll } = await axios.get(`/api/poll/${this.state.code}/false`);
 
-			history.push(`/poll/${poll.name}`);
+			if (poll.status === "ended") {
+				this.setState({
+					errors: {
+						code: "Deja, balsavimas jau sustabdytas!",
+					},
+				});
+			} else history.push(`/poll/${poll.name}`);
 		} catch (e) {
 			console.log(e);
-			let newErrors = this.state.errors;
 			if (e.response.status === 404) {
-				newErrors.code = "Balsavimas nerastas, pasitikrink kodą!";
-				this.setState({ newErrors });
-			}
-			if (e.response.status === 403) {
-				newErrors.code = "Deja, balsavimas jau sustabdytas!";
-				this.setState({ newErrors });
+				this.setState({ errors: { code: "Balsavimas nerastas, pasitikrink kodą!" } });
 			}
 		}
 	};

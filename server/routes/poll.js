@@ -34,7 +34,6 @@ router.get("/:nameOrVotingCode/:populateVotesTF", async (req, res) => {
 			.exec();
 
 		if (isEmpty(poll)) return res.status(404).json({ error: "Poll doesn't exist!" });
-		if (poll.status === "ended") return res.status(403).json({ error: "Poll has ended!" });
 
 		if (populateVotesTF !== "true") {
 			return res.json(poll);
