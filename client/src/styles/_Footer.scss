@@ -1,0 +1,18 @@
+a {
+	padding: 1em 1em;
+
+	font-size: 1.125em;
+	font-weight: bold;
+
+	color: #fff;
+	text-decoration: none;
+
+	&:hover {
+		font-size: 1.125em;
+
+		color: #000;
+		text-decoration: none;
+
+		background: rgba(theme-color("xpink"), 0.9);
+	}
+}
