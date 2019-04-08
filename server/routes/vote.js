@@ -17,6 +17,24 @@ router.get("/test", async (req, res) => {
 	return res.json("Test route works!");
 });
 
+router.get("/all", async (req, res) => {
+	try {
+		const votes = await Vote.find({
+			votingCode: "balsuoti",
+			// rankings: { name: "9 D klasė", rank: "1" },
+			// rankings: { name: "9 D klasė" },
+			// rankings: { rank: "1" },
+			// rankings: { $in: { name: "9 D klasė", rank: "1" }}
+			"rankings.name": "9 D klasė",
+			"rankings.rank": "1",
+		});
+		return res.json({ length: votes.length, votes });
+	} catch (e) {
+		console.log(e);
+		return res.status(500).json(e);
+	}
+});
+
 router.post("/", async (req, res) => {
 	try {
 		const { isValid, errors } = validateCreateVote(req.body);
