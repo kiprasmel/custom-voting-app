@@ -4,6 +4,10 @@ import React, { Component } from "react";
 class ThanksForVoting extends Component {
 	// static propTypes = {};
 
+	componentDidMount() {
+		window.scrollTo(0, 0);
+	}
+
 	render() {
 		// const { pollName } = this.props.match.params;
 
