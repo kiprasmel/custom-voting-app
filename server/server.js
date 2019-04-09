@@ -34,7 +34,7 @@ app.use("/api/vote", require("./routes/vote"));
 // if in production:
 if (process.env.NODE_ENV === "production") {
 	// serve static assets
-	app.use(express.static("../client/build"));
+	app.use(express.static("../client/build/")); // the '/' is needed! https://stackoverflow.com/a/48666785
 
 	// capture everything that's outside our API routes and send the built react application (index.html file):
 	app.get("*", (req, res) => {
