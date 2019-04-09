@@ -58,41 +58,16 @@ router.get("/:nameOrVotingCode/:populateVotesTF", async (req, res) => {
 		}
 
 		// `teams` are just rewritten votingOptions who have less votingOptions data and more analysis data.
+
+			/** 
+		 * note
+		 * do not use `votesPerRank: votesPerRank`
+		 * instead use `votesPerRank: {...votesPerRank}`
+			 * 
+		 * there's a big difference:D (making a reference VS copying)
+			 */
 		let teams = poll.votingOptions.map(({ name }) => {
 			return { name: name, points: 0, place: -1, votesPerRank: { ...votesPerRank } };
-			// // return { name: name, points: 0, place: -1, votesPerRank: votesPerRank };
-			/** 
-			 * OH MY FUCKING GOD.
-			 * I JUST SPENT 3 HOURS FIGURING OUT WHY ALL VOTESPERRANK SUMS WERE ADDED TOGETHER.
-			 * IT TURNS OOUT THAT I WHEN I CREATED THE VOTESPERRANK OBJECT AND USED IT TO CREATE `TEAMS`,
-			 * EACH TEAM'S VOTESPERRANK OBJECT WAS JUST *A FUCKING REFERENCE* TO THE SAME VOTESPERRANK OBJECT,
-			 * AND THAT MEANT THAT THE SUMS WERE ADDING UP TOGETHER. OH MY GOD.
-			 * WHAT THE FUCK JAVASCRIPT? I CAME FROM C++ AND I FIND THIS OFFENSIVE
-			 * 
-			 * IT PREVIOUSLY WAS LIKE THIS:
-			 * `return { name: name, points: 0, place: -1, votesPerRank: votesPerRank };`
-			 * 
-			 * DEBUGGING CODE:
-				`
-				for (const team of teams) {
-					for (const vote of poll.votes) {
-						for (const ranking of vote.rankings) {
-							if (team.name === ranking.name) {
-								console.log("team.name", team.name, "ranking.name", ranking.name, "team.votesPerRank[ranking.rank - 1]", team.votesPerRank[ranking.rank - 1], "ranking.rank", ranking.rank, "team.votesPerRank", team.votesPerRank)
-								team.votesPerRank[ranking.rank - 1] += 1;
-							}
-						}
-					}
-				}
-				`
-			 * 
-			 * AND THE OBVIOUS FIX WHICH I INSTANTLY NOTICED 
-			 * AFTER I STARTED CONSOLE LOGGING EVERYTHING EVERYTIME IN THE FOR LOOP
-			 * WAS TO ADD A SPREAD OPERATOR ... AND PUT THE THING IN CURLY BRACES {} SO THAT IT GETS COPIED,
-			 * INSTEAD OF GETTING A REFERENCE.
-			 * 
-			 * THE MORE YOU KNOW...
-			 */
 		});
 
 		/** loop through all poll's votes' rankings' and give teams points based on what rank they got: */
