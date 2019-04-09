@@ -59,13 +59,15 @@ router.get("/:nameOrVotingCode/:populateVotesTF", async (req, res) => {
 
 		// `teams` are just rewritten votingOptions who have less votingOptions data and more analysis data.
 
-			/** 
+		console.time("normalTeams");
+
+		/**
 		 * note
 		 * do not use `votesPerRank: votesPerRank`
 		 * instead use `votesPerRank: {...votesPerRank}`
-			 * 
+		 *
 		 * there's a big difference:D (making a reference VS copying)
-			 */
+		 */
 		let teams = poll.votingOptions.map(({ name }) => {
 			return { name: name, points: 0, place: -1, votesPerRank: { ...votesPerRank } };
 		});
@@ -90,11 +92,59 @@ router.get("/:nameOrVotingCode/:populateVotesTF", async (req, res) => {
 		 */
 		teams.sort((a, b) => b.points - a.points);
 
-
 		// set places (teams MUST be sorted descendingly by their scores beforehand)
 		for (let i = 0; i < teams.length; i++) {
 			teams[i].place = i + 1;
 		}
+
+		console.log("teams", teams);
+
+		console.timeEnd("normalTeams");
+
+		// ---
+
+		console.time("dictionaryTeams");
+
+		let dictionaryTeams = {};
+		poll.votingOptions.forEach(({ name }) => {
+			dictionaryTeams[name] = { points: 0, place: -1, votesPerRank: { ...votesPerRank } };
+		});
+
+		for (const vote of poll.votes) {
+			for (const ranking of vote.rankings) {
+				dictionaryTeams[ranking.name].points += maxPoints - ranking.rank;
+				dictionaryTeams[ranking.name].votesPerRank[ranking.rank - 1] += 1;
+			}
+		}
+
+		/**
+		 *  convert back to array.
+		 * `Object.entries` gives an array with arrays of teams,
+		 * containing the team name at index 0,
+		 * and the team object at index 1,
+		 * so we just destructure them and return a new object instead
+		 */
+		let dictionaryTeamsArray = Object.entries(dictionaryTeams).map(([teamName, theTeamObj]) => ({
+			name: teamName,
+			...theTeamObj,
+		}));
+
+		/**
+		 * sort teams by their points.
+		 * teams[0] will have the least amount of points points and
+		 * teams[teams.length - 1] will have the most amount of points.
+		 * more at https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+		 */
+		dictionaryTeamsArray.sort((a, b) => b.points - a.points);
+
+		// set places (teams MUST be sorted descendingly by their scores beforehand)
+		for (let i = 0; i < dictionaryTeamsArray.length; i++) {
+			dictionaryTeamsArray[i].place = i + 1;
+		}
+
+		console.log("dictionaryTeamsArray", dictionaryTeamsArray);
+
+		console.timeEnd("dictionaryTeams");
 
 		return res.json({ poll, teams });
 	} catch (e) {
