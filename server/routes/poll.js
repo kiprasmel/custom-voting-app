@@ -82,8 +82,14 @@ router.get("/:nameOrVotingCode/:populateVotesTF", async (req, res) => {
 			}
 		}
 
-		// sort teams by their points. teams[0] will have the most points, and teams[teams.length - 1] will have the least amount of points.
-		teams.sort((a, b) => a.points < b.points);
+		/**
+		 * sort teams by their points.
+		 * teams[0] will have the least amount of points points and
+		 * teams[teams.length - 1] will have the most amount of points.
+		 * more at https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+		 */
+		teams.sort((a, b) => b.points - a.points);
+
 
 		// set places (teams MUST be sorted descendingly by their scores beforehand)
 		for (let i = 0; i < teams.length; i++) {
