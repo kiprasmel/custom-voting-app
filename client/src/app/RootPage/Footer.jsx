@@ -8,7 +8,7 @@ export default () => {
 				// style={{ borderTop: "1px solid #fff" }}
 				style={{ fontSize: "0.95rem" }}
 			>
-				Copyright &copy; 2018-{new Date().getFullYear()} "Wannable" programuotojas{" "}
+				Copyright &copy; 2018-{new Date().getFullYear()} "Wannabe" programuotojas{" "}
 				<a href="https://kipras.org/" target="_blank" rel="noopener noreferrer">
 					Kipras Melnikovas
 					<span role="img" aria-label="pin">
