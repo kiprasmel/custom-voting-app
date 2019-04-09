@@ -1,5 +1,13 @@
 # Custom voting app
 
+## Start the app in production
+
+- using `pm2`
+
+```bash
+pm2 start npm --name "voting" -- start
+```
+
 ## Todos
 
 - create performance tests for the API to make sure our optimizations are actually working
