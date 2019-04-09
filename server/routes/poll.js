@@ -146,7 +146,7 @@ router.get("/:nameOrVotingCode/:populateVotesTF", async (req, res) => {
 
 		console.timeEnd("dictionaryTeams");
 
-		return res.json({ poll, teams });
+		return res.json({ poll, teams: dictionaryTeamsArray });
 	} catch (e) {
 		console.log(e);
 		return res.status(500).json(e);
