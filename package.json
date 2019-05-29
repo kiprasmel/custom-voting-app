@@ -7,8 +7,8 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "concurrently \"npm run server --prefix server\" \"npm start --prefix client\"",
 		"start": "npm start --prefix server",
-		"_postbuild": "cd client && npm i && npm run build && cd ../server && npm i && cd ../",
-		"postbuild": "npm run postbuild --unsafe-perm=true --allow-root",
+		"_postbuild": "cd server && npm i && cd ../client && npm i && npm run build && cd ..",
+		"postbuild": "npm run _postbuild --unsafe-perm=true --allow-root",
 		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm i --prefix client && npm run build --prefix client && npm i --prefix server"
 	},
 	"repository": {
