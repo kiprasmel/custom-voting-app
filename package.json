@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "concurrently \"npm run server --prefix server\" \"npm start --prefix client\"",
-		"start": "npm start --prefix server",
+		"start": "cross-env NODE_ENV=production npm start --prefix server",
 		"_postbuild": "cd server && npm i && cd ../client && npm i && npm run build && cd ..",
 		"postbuild": "npm run _postbuild --unsafe-perm=true --allow-root",
 		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm i --prefix client && npm run build --prefix client && npm i --prefix server"
@@ -24,6 +24,7 @@
 	"homepage": "https://github.com/sarpik/custom-voting-app#readme",
 	"devDependencies": {
 		"concurrently": "^4.0.1",
+		"cross-env": "^5.2.0",
 		"node-sass": "^4.10.0"
 	},
 	"engines": {
