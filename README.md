@@ -10,6 +10,8 @@ pm2 start npm --name "voting" -- start
 
 ## Todos
 
+- Create `docker-compose.yml`
+
 - create performance tests for the API to make sure our optimizations are actually working
 
   - also, take averages, because some tests of only single iteration might not be accurate
