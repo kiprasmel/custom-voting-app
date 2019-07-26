@@ -1,38 +1,22 @@
 # Custom voting app
 
-## Serve in production from 0
+## Serve in production
 
-### build remotely
-
-> building locally might be more cumbersome due to having to clone the image from dockerhub. Instead, we clone the git repo & then build remotely.
-
-> note - this assumes you've got an ssh key, and have copied the public part of it to the remote server's user's `~/.ssh/authorized_keys` file either manually or using `ssh-copy-id`, and you've pushed your source code into a remote repository
-
-* ssh to remote machine
+* in the remote machine, make sure port `5000` is not taken, then run
 
 ```sh
-ssh <username>@<host>
+git clone git@github.com:kipras/custom-voting-app.git
+cd custom-voting-app
+sudo docker-compose up --build
 ```
 
-* clone git repo
+* ~~take a walk~~
+
+* or, if you're a danker individual
 
 ```sh
-# on remote machine:
-git clone git@github.com:sarpik/custom-voting-app.git
-sudo docker build .
+sudo docker run -p 5000:5000 kipras/custom-voting-app
 ```
-
-* copy the hash once the build finishes
-
-* run the built image as a container
-
-```sh
-sudo docker run -p 5000:5000 <the-hash-docker-build-gave-you>
-```
-
-fin
-
----
 
 ## Todos
 
