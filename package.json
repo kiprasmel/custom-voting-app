@@ -1,7 +1,7 @@
 {
 	"name": "custom-voting-app",
 	"version": "0.1.0",
-	"description": "",
+	"description": "Some dank wrapper for the two apps. I'm not sorry",
 	"main": "server.js",
 	"scripts": {
 		"full-install": "npm i && cd server && npm i && cd ../client && npm i && cd ..",
