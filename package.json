@@ -26,8 +26,7 @@
 	"homepage": "https://github.com/sarpik/custom-voting-app#readme",
 	"devDependencies": {
 		"concurrently": "^4.1.1",
-		"cross-env": "^5.2.0",
-		"node-sass": "^4.12.0"
+		"cross-env": "^5.2.0"
 	},
 	"engines": {
 		"node": "10.13.0",
