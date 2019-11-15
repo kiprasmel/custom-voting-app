@@ -5,13 +5,13 @@
 
 version: "3.7"
 
-services: 
+services:
   custom-voting-app:
     container_name: custom-voting-app
-    image: nodejs
-    build: 
-      context: .
-      dockerfile: Dockerfile
+    image: node
+    build: .
+      # context: .
+      # dockerfile: Dockerfile
     restart: unless-stopped
     ports:
       - "5000:5000"
