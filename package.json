@@ -1,15 +1,17 @@
 {
 	"name": "custom-voting-app",
 	"version": "0.1.0",
-	"description": "",
+	"description": "Some dank wrapper for the two apps. I'm not sorry",
 	"main": "server.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"full-install": "npm i && cd server && npm i && cd ../client && npm i && cd ..",
+		"_build": "cd client && npm run build && cd ..",
+		"build": "npm run _build --unsafe-perm=true --allow-root",
+		"update": "npm run full-install && npm run build",
+		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run full-install && npm run build",
 		"dev": "concurrently \"npm run server --prefix server\" \"npm start --prefix client\"",
-		"start": "cross-env NODE_ENV=production npm start --prefix server",
-		"_postbuild": "cd server && npm i && cd ../client && npm i && npm run build && cd ..",
-		"postbuild": "npm run _postbuild --unsafe-perm=true --allow-root",
-		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm i --prefix client && npm run build --prefix client && npm i --prefix server"
+		"start": "npm run dev",
+		"serve": "cross-env NODE_ENV=production npm start --prefix server"
 	},
 	"repository": {
 		"type": "git",
@@ -24,8 +26,7 @@
 	"homepage": "https://github.com/sarpik/custom-voting-app#readme",
 	"devDependencies": {
 		"concurrently": "^4.1.1",
-		"cross-env": "^5.2.0",
-		"node-sass": "^4.12.0"
+		"cross-env": "^5.2.0"
 	},
 	"engines": {
 		"node": "10.13.0",

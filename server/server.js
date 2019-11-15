@@ -4,7 +4,7 @@
  */
 
 /** load .env environment variables to process.env */
-"use strict";
+
 if (process.env.HEROKU != "true") {
 	require("./utils/loadDotenv")("../.env"); // FOR HEROKU ONLY
 }
@@ -15,7 +15,6 @@ const path = require("path");
 const helmet = require("helmet");
 
 /** Load models here: */
-/// foo(bar)
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -44,4 +43,4 @@ if (process.env.NODE_ENV === "production") {
 	});
 }
 
-app.listen(port, () => console.log(`~Server started on port ${port}`));
+app.listen(port, () => console.log(`~Server started on port ${port} with NODE_ENV ${process.env.NODE_ENV}`));

@@ -1,0 +1,17 @@
+# docker-compose.yml
+#
+# $ docker-compose up [--build]
+#
+
+version: "3.7"
+
+services:
+  custom-voting-app:
+    container_name: custom-voting-app
+    image: node
+    build: .
+      # context: .
+      # dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
